@@ -1,13 +1,17 @@
 
 import Card from './card.js'
 
-/* todo Définition de la classe de tableau de jeux */
+/* Classe représentant un tableau de jeux */
 class Board {
 
 	/* Liste des accesseurs */
 	#cards = []
 
-	/* todo Constructeur */
+	/**
+ * Représente un tableau de jeux.
+ * @constructor
+ * @param {Card} cards - Les cartes du tableau de jeux
+ */
 	constructor(cards) {
 
 		if (cards === 'undefied' || cards === null) {
@@ -17,7 +21,10 @@ class Board {
 		this.#cards = cards;
 	}
 
-	/* todo Fonction de rendu HTML du contenu de la classe */
+  /**
+   * Retourne le rendu HTML du contenu de la classe sous forme d'une chaîne
+   * @return {string} La chaîne HTML représentant le contenu de la classe
+   */
 	render() {
 
 		let result = '';
@@ -37,6 +44,9 @@ class Board {
 		// Il y a une paire de carte
 		for (let cpt = 0; cpt < 2; cpt++) {
 
+			// On mélange les cartes
+		  this.shuffleCards()
+
 			// On ouvre une nouvelle ligne de cartes
 			result += '<div class=\'row\'>'
 
@@ -46,9 +56,7 @@ class Board {
 				let cardName = this.#cards[cpt2];
 
 				// On créée la carte en lui donnant son nom et la fonction à appeler au click
-				let card = new Card(cardName, function() {
-					this.#cardClick(cardName)
-				});
+				let card = new Card(cardName)
 
 				// Si on est à la moitié de la liste, on ferme la ligne précédente et on en ouvre une autre
 				if (cpt2 === halfCardIndex) {
@@ -70,13 +78,9 @@ class Board {
 		return result;
 	}
 
-	/* Fonction de gestion du click d'une carte */
-	#cardClick = (cardName) => {
-		alert('cardName click: ' + cardName);
-	}
-
-
-	/* Mélange les cartes */
+	/**
+   * Mélange les cartes du tableau de jeux
+   */
 	shuffleCards() {
 
 		// On récupère et on compte une seule fois le nombre de cartes

@@ -5,6 +5,8 @@ $bg-text-color : #fffdd8;
 $light-bg-clock : #0ac3a7;
 $dark-bg-clock : #078975;
 
+$find-color : #CEC64F;
+
 $fruits-number : 18;
 $fruit-size : 100px;
 
@@ -12,7 +14,7 @@ $fruit-size : 100px;
 @function get-fruit-height($index) {
 
 	// Si l'index est incohérent, on prend l'index 0 par défaut
-	@if ($index < 0 or $index >= 17) {
+	@if ($index < 0 or $index > 17) {
 		$index : 0;
 	}
 
@@ -40,11 +42,30 @@ h1 {
 }
 
 .card {
-  border : 8px solid $bg-color-light !important;
+  border : 8px solid $bg-color-light;
   border-radius: 1.5em;
   margin: 0px !important;
   height: 120px;
   min-width: percentage(1 / ($fruits-number / 2));
+}
+
+.card-hide {
+  background-color: $dark-bg-clock;
+  background-image: url("/images/interrogation.png") !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin:0;
+  padding:0;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+}
+
+.card-find {
+  border : 6px solid $find-color !important;
+}
+
+.hide {
+  opacity: 0;
 }
 
 .fruit {

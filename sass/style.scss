@@ -5,6 +5,7 @@ $bg-text-color : #fffdd8;
 $light-bg-clock : #0ac3a7;
 $dark-bg-clock : #078975;
 
+$fruits-number : 18;
 $fruit-size : 100px;
 
 /* Donne la position en haut d'une fruit à partir de son index */
@@ -43,16 +44,15 @@ h1 {
   border-radius: 1.5em;
   margin: 0px !important;
   height: 120px;
+  min-width: percentage(1 / ($fruits-number / 2));
 }
 
 .fruit {
-  background-image:url("/images/cards.png") !important;
-  background-repeat:no-repeat;
-  background-position: center;
-  display: block;
+  background-image: url("/images/cards.png") !important;
+  background-repeat: no-repeat;
+  background-position-x: center;
   height: 100%;
   width: 100%;
-  background-position-x: center;
 }
 
 .red-apple {

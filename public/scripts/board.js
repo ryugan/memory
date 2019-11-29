@@ -32,7 +32,7 @@ class Board {
 
 		// Définition de variables complémentaires
 		var lastCardIndex = cardsNumber -1;
-		var halfCardIndex = cardsNumber / 2 -1; // todo prévoir le cas des impairs
+		var halfCardIndex = cardsNumber / 2;
 
 		// Il y a une paire de carte
 		for (var cpt = 0; cpt < 2; cpt++) {

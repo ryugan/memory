@@ -1,3 +1,5 @@
+@charset "UTF-8";
+/* Donne la position en haut d'une fruit à partir de son index */
 body {
   background-color: #282c34;
 }
@@ -19,86 +21,92 @@ h1 {
 }
 
 .card {
-  /*background-color: $dark-bg-clock;*/
-  height: 13vmin;
-  width: 13vmin;
-  border: 10px solid #49515f !important;
+  border: 8px solid #49515f !important;
   border-radius: 1.5em;
   margin: 0px !important;
+  height: 120px;
 }
 
-.fruit, .raspberry, .cherry, .perry, .purple-plum, .watermelon, .grapes, .peach2, .green-apple, .strawberry, .yellow-lemon, .peach, .cranberry, .green-lemon, .orange, .banana, .red-apple {
+.fruit, .yellow-cherry, .mango, .raspberry, .red-cherry, .perry, .purple-plum, .watermelon, .grapes, .peach2, .green-apple, .strawberry, .yellow-lemon, .peach, .cranberry, .green-lemon, .orange, .banana, .red-apple {
   background-image: url("/images/cards.png") !important;
   background-repeat: no-repeat;
-  height: 100px;
-  width: 100px;
+  background-position: center;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  height: 100%;
+  width: 100%;
+  background-position-x: center;
 }
 
 .red-apple {
-  background-position: 0px 0px;
+  background-position-y: 0px;
 }
 
 .banana {
-  background-position: 0px -100px;
+  background-position-y: -100px;
 }
 
 .orange {
-  background-position: 0px -200px;
+  background-position-y: -200px;
 }
 
 .green-lemon {
-  background-position: 0px -300px;
+  background-position-y: -300px;
 }
 
 .cranberry {
-  background-position: 0px -400px;
+  background-position-y: -400px;
 }
 
 .peach {
-  background-position: 0px -500px;
+  background-position-y: -500px;
 }
 
 .yellow-lemon {
-  background-position: 0px -600px;
+  background-position-y: -600px;
 }
 
 .strawberry {
-  background-position: 0px -700px;
+  background-position-y: -700px;
 }
 
 .green-apple {
-  background-position: 0px -800px;
+  background-position-y: -800px;
 }
 
 .peach2 {
-  background-position: 0px -900px;
+  background-position-y: -900px;
 }
 
 .grapes {
-  background-position: 0px -1000px;
+  background-position-y: -1000px;
 }
 
 .watermelon {
-  background-position: 0px -1100px;
+  background-position-y: -1100px;
 }
 
 .purple-plum {
-  background-position: 0px -1200px;
+  background-position-y: -1200px;
 }
 
 .perry {
-  background-position: 0px -1300px;
+  background-position-y: -1300px;
 }
 
-.cherry {
-  background-position: 0px -1400px;
+.red-cherry {
+  background-position-y: -1400px;
 }
 
 .raspberry {
-  background-position: 0px -1500px;
+  background-position-y: -1500px;
+}
+
+.mango {
+  background-position-y: -1600px;
+}
+
+.yellow-cherry {
+  background-position-y: 0px;
 }
 
 /*# sourceMappingURL=style.css.map */

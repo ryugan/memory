@@ -31,17 +31,17 @@ class Board {
 		}
 
 		// Définition de variables complémentaires
-		var lastCardIndex = cardsNumber -1;
-		var halfCardIndex = cardsNumber / 2;
+		let lastCardIndex = cardsNumber -1;
+		let halfCardIndex = cardsNumber / 2;
 
 		// Il y a une paire de carte
-		for (var cpt = 0; cpt < 2; cpt++) {
+		for (let cpt = 0; cpt < 2; cpt++) {
 
 			// On ouvre une nouvelle ligne de cartes
 			result += '<div class=\'row\'>'
 
 			// Il faut placer toutes les cartes
-			for (var cpt2 = 0; cpt2 < cardsNumber; cpt2++) {
+			for (let cpt2 = 0; cpt2 < cardsNumber; cpt2++) {
 
 				let cardName = this.#cards[cpt2];
 
@@ -73,6 +73,24 @@ class Board {
 	/* Fonction de gestion du click d'une carte */
 	#cardClick = (cardName) => {
 		alert('cardName click: ' + cardName);
+	}
+
+
+	/* Mélange les cartes */
+	shuffleCards() {
+
+		// On récupère et on compte une seule fois le nombre de cartes
+		const cardsNumber = this.#cards === 'undefined' ? 0 : this.#cards.length;
+
+		// Mélange les cartes
+    for (let cpt = cardsNumber -1; cpt > 0; cpt--) {
+
+				// On détermine une position aléatoire
+        const cpt2 = Math.floor(Math.random() * (cpt + 1));
+
+				// On intervertit les positions
+        [this.#cards[cpt], this.#cards[cpt2]] = [this.#cards[cpt2], this.#cards[cpt]];
+    }
 	}
 }
 

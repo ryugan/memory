@@ -34,6 +34,9 @@ $(document).ready(function () {
   // On crée un composant Board
   const boardComposant = new Board(fruits)
 
+  // On mélange les cartes
+  boardComposant.shuffleCards()
+
   // On récupère le rendu du composant Board
   const render = boardComposant.render()
 

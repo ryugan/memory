@@ -1,0 +1,104 @@
+body {
+  background-color: #282c34;
+}
+
+h1 {
+  color: #fffdd8;
+  text-transform: uppercase;
+  font-size: 4em;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 2vmin;
+  margin-bottom: 10vmin;
+}
+
+.board {
+  border: 3px solid #0ac3a7;
+  background-color: #49515f;
+  margin: 10px;
+}
+
+.card {
+  /*background-color: $dark-bg-clock;*/
+  height: 13vmin;
+  width: 13vmin;
+  border: 10px solid #49515f !important;
+  border-radius: 1.5em;
+  margin: 0px !important;
+}
+
+.fruit, .raspberry, .cherry, .perry, .purple-plum, .watermelon, .grapes, .peach2, .green-apple, .strawberry, .yellow-lemon, .peach, .cranberry, .green-lemon, .orange, .banana, .red-apple {
+  background-image: url("/images/cards.png") !important;
+  background-repeat: no-repeat;
+  height: 100px;
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.red-apple {
+  background-position: 0px 0px;
+}
+
+.banana {
+  background-position: 0px -100px;
+}
+
+.orange {
+  background-position: 0px -200px;
+}
+
+.green-lemon {
+  background-position: 0px -300px;
+}
+
+.cranberry {
+  background-position: 0px -400px;
+}
+
+.peach {
+  background-position: 0px -500px;
+}
+
+.yellow-lemon {
+  background-position: 0px -600px;
+}
+
+.strawberry {
+  background-position: 0px -700px;
+}
+
+.green-apple {
+  background-position: 0px -800px;
+}
+
+.peach2 {
+  background-position: 0px -900px;
+}
+
+.grapes {
+  background-position: 0px -1000px;
+}
+
+.watermelon {
+  background-position: 0px -1100px;
+}
+
+.purple-plum {
+  background-position: 0px -1200px;
+}
+
+.perry {
+  background-position: 0px -1300px;
+}
+
+.cherry {
+  background-position: 0px -1400px;
+}
+
+.raspberry {
+  background-position: 0px -1500px;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,130 @@
+$bg-color : #282c34;
+$bg-color-light : lighten(#282c34, 15%);
+$bg-text-color : #fffdd8;
+
+$light-bg-clock : #0ac3a7;
+$dark-bg-clock : #078975;
+
+$fruit-size : 100px;
+
+@function fruit-index($index) {
+  @return -$index * $fruit-size;
+}
+
+body {
+  background-color : $bg-color;
+}
+
+h1 {
+  color : $bg-text-color;
+  text-transform: uppercase;
+  font-size: 4em;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 2vmin;
+  margin-bottom: 10vmin;
+}
+
+.board {
+  border: 3px solid $light-bg-clock;
+  background-color: $bg-color-light;
+  margin: 10px;
+}
+
+.card {
+  height: 13vmin;
+  width: 13vmin;
+  border : 10px solid $bg-color-light !important;
+  border-radius: 1.5em;
+  margin: 0px !important;
+}
+
+.fruit {
+  background-image:url("/images/cards.png") !important;
+  background-repeat:no-repeat;
+  height: 100px;
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.red-apple {
+  @extend .fruit;
+  background-position: 0px fruit-index(0)
+}
+
+.banana {
+  @extend .fruit;
+  background-position: 0px fruit-index(1)
+}
+
+.orange {
+  @extend .fruit;
+  background-position: 0px fruit-index(2)
+}
+
+.green-lemon {
+  @extend .fruit;
+  background-position: 0px fruit-index(3)
+}
+
+.cranberry {
+  @extend .fruit;
+  background-position: 0px fruit-index(4)
+}
+
+.peach {
+  @extend .fruit;
+  background-position: 0px fruit-index(5)
+}
+
+.yellow-lemon {
+  @extend .fruit;
+  background-position: 0px fruit-index(6)
+}
+
+.strawberry {
+  @extend .fruit;
+  background-position: 0px fruit-index(7)
+}
+
+.green-apple {
+  @extend .fruit;
+  background-position: 0px fruit-index(8)
+}
+
+.peach2 {
+  @extend .fruit;
+  background-position: 0px fruit-index(9)
+}
+
+.grapes {
+  @extend .fruit;
+  background-position: 0px fruit-index(10)
+}
+
+.watermelon {
+  @extend .fruit;
+  background-position: 0px fruit-index(11)
+}
+
+.purple-plum {
+  @extend .fruit;
+  background-position: 0px fruit-index(12)
+}
+
+.perry {
+  @extend .fruit;
+  background-position: 0px fruit-index(13)
+}
+
+.cherry {
+  @extend .fruit;
+  background-position: 0px fruit-index(14)
+}
+
+.raspberry {
+  @extend .fruit;
+  background-position: 0px fruit-index(15)
+}

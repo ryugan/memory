@@ -1,0 +1,24 @@
+{
+  "name": "memory",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+	"scss": "sass ./sass/style.scss ./public/styles/style.css",
+    "start": "npm run scss && node ./bin/www"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "^3.0.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "install": "^0.13.0",
+    "jquery": "^3.4.1",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "connect-browser-sync": "^2.1.0"
+  }
+}

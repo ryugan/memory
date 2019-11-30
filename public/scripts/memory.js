@@ -49,40 +49,38 @@ $(document).ready(function () {
       return
     }
 
-    // On regarde si la carte est la seule à ne pas être caché
+    // On regarde s'il existe déjà des cartes visibles et non trouvées
     const eltVisible = $(".card-visible").not(".card-find")
     const eltVisibleLength = eltVisible.length
 
-    // S'il y a plus d'un élément retournée
+    // On commence par retourner la nouvelle cartes
+    elt.removeClass("card-hide").addClass("card-visible")
+    elt.children().removeClass("hide")
+
+    // S'il y a plus d'une carte retournée
     if (eltVisibleLength > 1) {
 
-      // On occulte les cartes retournéesp
+      // On occulte les cartes retournées précédemment
       eltVisible.addClass("card-hide").removeClass("card-visible")
       eltVisible.children().addClass("hide")
     }
-    else {
+    // S'il y avait déjà une carte retournée
+    else if (eltVisibleLength === 1) {
+      const eltClassName = elt.children().attr("class")
+      const eltVisibleClassName = eltVisible.children().attr("class")
 
-      // On commence par retournée la nouvelle carte
-      elt.removeClass("card-hide").addClass("card-visible")
-      elt.children().removeClass("hide")
-
-      // S'il y avait déjà une carte retournée
-      if (eltVisibleLength === 1) {
-        const eltClassName = elt.children().attr("class")
-        const eltVisibleClassName = eltVisible.children().attr("class")
-
-        // Si les deux cartes sont du même type
-        if (eltClassName === eltVisibleClassName)
-        {
-          // On note que les cartes ont été trouvées
-          elt.addClass("card-find")
-          eltVisible.addClass("card-find")
-        }
-        else {
-          console.log("pas trouvé")
-        }
+      // Si les deux cartes sont du même type
+      if (eltClassName === eltVisibleClassName)
+      {
+        // On note que les cartes ont été trouvées
+        elt.addClass("card-find")
+        eltVisible.addClass("card-find")
+      }
+      else {
+        console.log("pas trouvé")
       }
     }
+    // Sinon il n'y avait pas de cartes retournées précédemment
   })
 
 })

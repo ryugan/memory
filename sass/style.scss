@@ -1,3 +1,7 @@
+/**************/
+/* Constantes */
+/**************/
+
 $bg-color : #282c34;
 $bg-color-light : lighten(#282c34, 15%);
 $bg-text-color : #fffdd8;
@@ -8,6 +12,10 @@ $dark-bg-clock : #078975;
 $find-color : #CEC64F;
 
 $fruit-size : 100px;
+
+/***************/
+/*  Functions  */
+/***************/
 
 /* Donne la position en haut d'une fruit à partir de son index */
 @function get-fruit-height($index) {
@@ -20,6 +28,10 @@ $fruit-size : 100px;
   @return -$index * $fruit-size;
 }
 
+/**************/
+/*  Elements  */
+/**************/
+
 body {
   background-color : $bg-color;
 }
@@ -31,18 +43,25 @@ h1 {
   font-weight: 900;
   text-align: center;
   margin-top: 2vmin;
-  margin-bottom: 10vmin;
 }
 
 label {
 	color : $bg-text-color;
 }
 
+/***************/
+/*    Board    */
+/***************/
+
 .board {
   border: 3px solid $light-bg-clock;
   background-color: $bg-color-light;
   margin: 10px;
 }
+
+/***************/
+/*     Card    */
+/***************/
 
 .card {
   border : 8px solid $bg-color-light;
@@ -69,6 +88,10 @@ label {
 .hide {
   opacity: 0;
 }
+
+/***************/
+/*    Fruit    */
+/***************/
 
 .fruit {
   background-image: url("/images/cards.png") !important;
@@ -166,4 +189,23 @@ label {
 .yellow-cherry {
   @extend .fruit;
   background-position-y: get-fruit-height(17);
+}
+
+/***************/
+/*   Progress  */
+/***************/
+
+.progress {
+	background-color : $bg-color;
+	height: 25vmin;
+}
+
+.progress > svg {
+	height: 100%;
+	display: block;
+}
+
+.progressbar-text {
+	color : $bg-text-color !important;
+	font-size: 4em;
 }

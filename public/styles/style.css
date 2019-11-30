@@ -1,5 +1,14 @@
 @charset "UTF-8";
+/**************/
+/* Constantes */
+/**************/
+/***************/
+/*  Functions  */
+/***************/
 /* Donne la position en haut d'une fruit à partir de son index */
+/**************/
+/*  Elements  */
+/**************/
 body {
   background-color: #282c34;
 }
@@ -11,19 +20,24 @@ h1 {
   font-weight: 900;
   text-align: center;
   margin-top: 2vmin;
-  margin-bottom: 10vmin;
 }
 
 label {
   color: #fffdd8;
 }
 
+/***************/
+/*    Board    */
+/***************/
 .board {
   border: 3px solid #0ac3a7;
   background-color: #49515f;
   margin: 10px;
 }
 
+/***************/
+/*     Card    */
+/***************/
 .card {
   border: 8px solid #49515f;
   border-radius: 1.5em;
@@ -52,6 +66,9 @@ label {
   opacity: 0;
 }
 
+/***************/
+/*    Fruit    */
+/***************/
 .fruit, .yellow-cherry, .mango, .raspberry, .red-cherry, .perry, .purple-plum, .watermelon, .grapes, .peach2, .green-apple, .strawberry, .yellow-lemon, .peach, .cranberry, .green-lemon, .orange, .banana, .red-apple {
   background-image: url("/images/cards.png") !important;
   background-repeat: no-repeat;
@@ -130,6 +147,24 @@ label {
 
 .yellow-cherry {
   background-position-y: -1700px;
+}
+
+/***************/
+/*   Progress  */
+/***************/
+.progress {
+  background-color: #282c34;
+  height: 25vmin;
+}
+
+.progress > svg {
+  height: 100%;
+  display: block;
+}
+
+.progressbar-text {
+  color: #fffdd8 !important;
+  font-size: 4em;
 }
 
 /*# sourceMappingURL=style.css.map */

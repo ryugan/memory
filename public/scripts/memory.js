@@ -58,6 +58,9 @@ function initBoard (cardsNumber) {
 
   // Initialisation du clic sur les cartes
   initCardsClick()
+
+  // Initialisation de la progressbar (en millisecond)
+  initProgressBar(300000) // 5min = 5 * 60 * 1000
 }
 
 /**
@@ -126,6 +129,49 @@ function initSelectCardsNumber () {
     // On initialise le tableau avec cette valeur
     initBoard(selectedValue)
   })
+}
 
+/**
+ * Initialise la progress bar
+ */
+function initProgressBar (duration) {
 
+  // On nettoie la progressbar
+  $('#progress').empty()
+
+  // On définie les paramètres
+  const circleParameters = {
+    color: '#28a745',
+    duration: duration, // en milliseconds
+    easing: 'linear', // avance de façon linéaire
+    trailWidth: 2, // largeur du trait du cercle en fond
+    strokeWidth: 4, // largeur du trait de l'avancement
+    from: { color: '#28a745', width: 2 },
+    to: { color: '#dc3545', width: 4 },
+    step: function(state, circle) {
+
+      // Application des règles du From To
+      circle.path.setAttribute('stroke', state.color)
+      circle.path.setAttribute('stroke-width', state.width)
+
+      // Récupération de la valeur du cercle (entre 0 et 1)
+      const circleValue = circle.value()
+
+      // Calcul du temps représentant
+      const secondsRemaining = (duration - duration * circleValue) / 1000
+      const minutes = parseInt(secondsRemaining / 60)
+      const seconds = parseInt(secondsRemaining % 60)
+
+      // On affiche une chaîne contenant le temps restant
+      const showValue = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0')
+
+      circle.setText(showValue)
+    }
+  }
+
+  // On recrée une progressbar
+  const circle = new ProgressBar.Circle('#progress', circleParameters)
+
+  // On anime le cercle une fois
+  circle.animate(1)
 }

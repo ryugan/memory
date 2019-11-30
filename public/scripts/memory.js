@@ -60,7 +60,7 @@ function initBoard (cardsNumber) {
   initCardsClick()
 
   // Initialisation de la progressbar (en millisecond)
-  initProgressBar(1000)//120000) // 2min = 5 * 60 * 1000
+  initProgressBar(120000) // 2min = 5 * 60 * 1000
 }
 
 /**
@@ -73,41 +73,39 @@ function initCardsClick () {
     const elt = $(this)
 
     // Si la carte est visible ou trouvé on ne fait rien (permet de gérer le double-clic sur la même carte)
-    if (elt.hasClass("card-visible") || elt.hasClass("card-find")) {
+    if (elt.hasClass('card-visible') || elt.hasClass('card-find')) {
       return
     }
 
     // On regarde s'il existe déjà des cartes visibles et non trouvées
-    const eltVisible = $(".card-visible").not(".card-find")
+    const eltVisible = $('.card-visible').not('.card-find')
     const eltVisibleLength = eltVisible.length
 
     // On commence par retourner la nouvelle cartes
-    elt.removeClass("card-hide").addClass("card-visible")
-    elt.children().removeClass("hide")
+    elt.removeClass('card-hide').addClass('card-visible')
+    elt.children().removeClass('hide')
 
     // S'il y a plus d'une carte retournée
     if (eltVisibleLength > 1) {
 
       // On occulte les cartes retournées précédemment
-      eltVisible.addClass("card-hide").removeClass("card-visible")
-      eltVisible.children().addClass("hide")
+      eltVisible.addClass('card-hide').removeClass('card-visible')
+      eltVisible.children().addClass('hide')
     }
     // S'il y avait déjà une carte retournée
     else if (eltVisibleLength === 1) {
 
-      const eltClassName = elt.children().attr("class")
-      const eltVisibleClassName = eltVisible.children().attr("class")
+      const eltClassName = elt.children().attr('class')
+      const eltVisibleClassName = eltVisible.children().attr('class')
 
       // Si les deux cartes sont du même type
       if (eltClassName === eltVisibleClassName)
       {
         // On note que les cartes ont été trouvées
-        elt.addClass("card-find")
-        eltVisible.addClass("card-find")
+        elt.addClass('card-find')
+        eltVisible.addClass('card-find')
       }
-      else {
-        console.log("pas trouvé")
-      }
+      // Sinon on ne fait rien
     }
     // Sinon il n'y avait pas de cartes retournées précédemment
   })
@@ -118,18 +116,20 @@ function initCardsClick () {
  */
 function initSelectCardsNumber () {
 
-  // On recherche une seule fois l'élément
-  const select = $("#select-cards-number")
+  // Le changement du nombre de carte recharge le tableau
+  $('#select-cards-number').change(reloadBoard)
+}
 
-  // On applique le change
-  select.change(function() {
+/**
+ * Recharge le tableau
+ */
+function reloadBoard () {
 
-    // On récupère la valeur sélectionnée
-    const selectedValue =  select.val()
+  // On récupère le nombre de cartes sélectionnée
+  const selectedValue =  $('#select-cards-number').val()
 
-    // On initialise le tableau avec cette valeur
-    initBoard(selectedValue)
-  })
+  // On initialise le tableau avec cette valeur
+  initBoard(selectedValue)
 }
 
 /**
@@ -158,24 +158,54 @@ function initProgressBar (duration) {
       // Récupération de la valeur du cercle (entre 0 et 1)
       const circleValue = circle.value()
 
+      // Après avoir appliqué le stop, circle.value() return NaN et il faut appliquer un second stop pour un arrêt définitif
+      if (isNaN(circleValue)) {
+        circle.stop()
+        return
+      }
+
       // Calcul du temps représentant
-      const secondsRemaining = (duration - duration * circleValue) / 1000
-      const minutes = parseInt(secondsRemaining / 60)
-      const seconds = parseInt(secondsRemaining % 60)
+      const secondsTotalRemaining = (duration - duration * circleValue) / 1000
+      const minutesRemaining = parseInt(secondsTotalRemaining / 60)
+      const secondsRemaining = parseInt(secondsTotalRemaining % 60)
 
       // On affiche une chaîne contenant le temps restant
-      const showValue = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0')
+      const showValue = minutesRemaining.toString().padStart(2, '0') + ':' + secondsRemaining.toString().padStart(2, '0')
 
       circle.setText(showValue)
 
       // Si le compte à rebours est terminé
-      if (secondsRemaining === 0) {
+      if (secondsTotalRemaining === 0) {
+
+        // On arrête le timer
+        circle.stop()
 
         // On empêche l'utilisateur de cliquer sur les cartes
         $('.card').unbind()
 
-        // On avertit l'utilisateur qu'il a perdu
-        warningDialog('Temps écoulé !', 'Tu as perdu....', 'La prochaine sera la meilleure !', 'Une prochaine fois...', null, null)
+        // On avertit l'utilisateur qu'il a perdu, soit il recommence, soit on ne fait rien
+        warningDialog('Temps écoulé !', 'Tu as perdu....', 'La prochaine sera la meilleure !', 'Une prochaine fois...', reloadBoard, null)
+      }
+      else {
+
+        // On recherche s'il reste des cartes non trouvées
+        const eltHidden = $('.card-hide')
+        const eltHiddenLength = eltHidden.length
+
+        // S'il n'en reste plus, le joueur a gagné
+        if (eltHiddenLength === 0) {
+
+          // On arrête le timer
+          circle.stop()
+
+          // Calcul du temps de victoire
+          const secondsTotalPassed = duration * circleValue / 1000
+          const minutesPassed = parseInt(secondsTotalPassed / 60)
+          const secondsPassed = parseInt(secondsTotalPassed % 60)
+
+          // On avertit l'utilisateur qu'il a gagné, soit il recommence, soit on ne fait rien
+          successDialog('Victoire !', 'Tu as gagné en ' + minutesPassed + ' min et ' + secondsPassed + ' sec', 'Je peux faire encore mieux !', 'Non merci', reloadBoard, null)
+        }
       }
     }
   }
@@ -185,4 +215,5 @@ function initProgressBar (duration) {
 
   // On anime le cercle une fois
   circle.animate(1)
+
 }

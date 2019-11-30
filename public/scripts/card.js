@@ -3,8 +3,8 @@
 class Card {
 
 	/* Liste des accesseurs */
-	#cardName = ''
-	#colSpan = 1
+	cardName = ''
+	colSpan = 1
 
 	/**
  * Représente une carte.
@@ -19,14 +19,14 @@ class Card {
 			cardName = ''
 		}
 
-		this.#cardName = cardName;
+		this.cardName = cardName;
 
 		// Si le nombre d'espace d'une colonne est inconnu
 		if (typeof cardName === 'undefined' || cardName === null) {
 			colSpan = 1
 		}
 
-		this.#colSpan = colSpan;
+		this.colSpan = colSpan;
 	}
 
 	/**
@@ -37,8 +37,8 @@ class Card {
 
 		// On retourne le résultat de rendu
 		return `
-			<div class='card card-hide col-sm ` + this.#colSpan + `'>
-			  <div class='` + this.#cardName + ` hide'></div>
+			<div class='card card-hide col-sm ` + this.colSpan + `'>
+			  <div class='` + this.cardName + ` hide'></div>
 			</div>
 		`
 	}

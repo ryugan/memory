@@ -4,7 +4,7 @@ import Card from './card.js'
 class Board {
 
 		/* Liste des accesseurs */
-		#cards = []
+		cards = []
 
   /**
 	* Représente un tableau de jeux.
@@ -17,7 +17,7 @@ class Board {
 			cards = []
 		}
 
-		this.#cards = cards;
+		this.cards= cards
 	}
 
   /**
@@ -26,22 +26,22 @@ class Board {
    */
 	render() {
 
-		let result = '';
+		let result = ''
 
 		// On récupère et on compte une seule fois le nombre de cartes
-		let cardsNumber = this.#cards === typeof 'undefined' ? 0 : this.#cards.length;
+		let cardsNumber = this.cards=== typeof 'undefined' ? 0 : this.cards.length
 
 		// S'il n'y a pas de cartes, on ne fait rien
 		if (cardsNumber === 0) {
-			return result;
+			return result
 		}
 
 		// On ajoute la paire de chaque carte
-		const cards = this.#cards.concat(this.#cards)
+		const cards = this.cards.concat(this.cards)
 		cardsNumber *= 2
 
 		// Définition de variables complémentaires
-		let lastCardIndex = cardsNumber -1;
+		let lastCardIndex = cardsNumber -1
 
 		// On mélange les cartes
 		cards.shuffle()
@@ -55,7 +55,7 @@ class Board {
 		// Il faut placer toutes les cartes
 		for (let cpt = 0; cpt < cardsNumber; cpt++) {
 
-			let cardName = cards[cpt];
+			let cardName = cards[cpt]
 
 			// On créée la carte en lui donnant son nom et la fonction à appeler au click
 			let card = new Card(cardName, diviseur)
@@ -69,14 +69,14 @@ class Board {
 			}
 
 			// On récupère le rendu de la carte
-			result += card.render();
+			result += card.render()
 		}
 
 			// On clôture la ligne de carte
 			result += '</div>'
 
 		// On retourne le résultat de rendu
-		return result;
+		return result
 	}
 }
 

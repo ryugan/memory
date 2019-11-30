@@ -4,14 +4,14 @@ import Card from './card.js'
 /* Classe représentant un tableau de jeux */
 class Board {
 
-	/* Liste des accesseurs */
-	#cards = []
+		/* Liste des accesseurs */
+		#cards = []
 
-	/**
- * Représente un tableau de jeux.
- * @constructor
- * @param {Card} cards - Les cartes du tableau de jeux
- */
+  /**
+	* Représente un tableau de jeux.
+	* @constructor
+	* @param {Card} cards - Les cartes du tableau de jeux
+	*/
 	constructor(cards) {
 
 		if (cards === 'undefied' || cards === null) {

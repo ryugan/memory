@@ -209,3 +209,19 @@ label {
 	color : $bg-text-color !important;
 	font-size: 4em;
 }
+
+/*********************/
+/*  BootstrapDialog  */
+/*********************/
+
+.modal-content {
+	width: 45vw;
+}
+
+.bootstrap-dialog-header {
+	width: 100%
+}
+
+.btn-cancel {
+	margin-left: 10px;
+}

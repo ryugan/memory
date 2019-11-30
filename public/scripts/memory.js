@@ -60,7 +60,7 @@ function initBoard (cardsNumber) {
   initCardsClick()
 
   // Initialisation de la progressbar (en millisecond)
-  initProgressBar(120000) // 2min = 5 * 60 * 1000
+  initProgressBar(1000)//120000) // 2min = 5 * 60 * 1000
 }
 
 /**
@@ -175,7 +175,7 @@ function initProgressBar (duration) {
         $('.card').unbind()
 
         // On avertit l'utilisateur qu'il a perdu
-        alert('Looser !')
+        warningDialog('Temps écoulé !', 'Tu as perdu....', 'La prochaine sera la meilleure !', 'Une prochaine fois...', null, null)
       }
     }
   }

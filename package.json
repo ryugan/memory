@@ -9,6 +9,7 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
+    "bootstrap4-dialog": "^4.1.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.0.1",

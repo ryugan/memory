@@ -167,4 +167,36 @@ label {
   font-size: 4em;
 }
 
+/*********************/
+/*  BootstrapDialog  */
+/*********************/
+.modal-content {
+  width: 45vw;
+}
+
+.bootstrap-dialog-header {
+  width: 100%;
+}
+
+/*
+.modal-header {
+	display: block;
+}
+*/
+/*
+.bootstrap-dialog-footer {
+	width: 100%
+}*/
+.btn-cancel {
+  margin-left: 10px;
+}
+
+/*
+.modal-footer {
+	display: block;
+}
+
+
+*/
+
 /*# sourceMappingURL=style.css.map */

@@ -1,4 +1,3 @@
-
 import Card from './card.js'
 
 /* Classe représentant un tableau de jeux */
@@ -14,7 +13,7 @@ class Board {
 	*/
 	constructor(cards) {
 
-		if (cards === 'undefied' || cards === null) {
+		if (typeof cards === 'undefined' || cards === null) {
 			cards = []
 		}
 
@@ -30,7 +29,7 @@ class Board {
 		let result = '';
 
 		// On récupère et on compte une seule fois le nombre de cartes
-		let cardsNumber = this.#cards === 'undefined' ? 0 : this.#cards.length;
+		let cardsNumber = this.#cards === typeof 'undefined' ? 0 : this.#cards.length;
 
 		// S'il n'y a pas de cartes, on ne fait rien
 		if (cardsNumber === 0) {
@@ -45,7 +44,7 @@ class Board {
 		let lastCardIndex = cardsNumber -1;
 
 		// On mélange les cartes
-		this.shuffleCards()
+		cards.shuffle()
 
 		// On ouvre une nouvelle ligne de cartes
 		result += '<div class=\'row\'>'
@@ -78,25 +77,6 @@ class Board {
 
 		// On retourne le résultat de rendu
 		return result;
-	}
-
-	/**
-   * Mélange les cartes du tableau de jeux
-   */
-	shuffleCards() {
-
-		// On récupère et on compte une seule fois le nombre de cartes
-		const cardsNumber = this.#cards === 'undefined' ? 0 : this.#cards.length;
-
-		// Mélange les cartes
-    for (let cpt = cardsNumber -1; cpt > 0; cpt--) {
-
-				// On détermine une position aléatoire
-        const cpt2 = Math.floor(Math.random() * (cpt + 1));
-
-				// On intervertit les positions
-        [this.#cards[cpt], this.#cards[cpt2]] = [this.#cards[cpt2], this.#cards[cpt]];
-    }
 	}
 }
 

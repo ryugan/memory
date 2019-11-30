@@ -60,7 +60,7 @@ function initBoard (cardsNumber) {
   initCardsClick()
 
   // Initialisation de la progressbar (en millisecond)
-  initProgressBar(300000) // 5min = 5 * 60 * 1000
+  initProgressBar(120000) // 2min = 5 * 60 * 1000
 }
 
 /**
@@ -94,6 +94,7 @@ function initCardsClick () {
     }
     // S'il y avait déjà une carte retournée
     else if (eltVisibleLength === 1) {
+
       const eltClassName = elt.children().attr("class")
       const eltVisibleClassName = eltVisible.children().attr("class")
 
@@ -166,6 +167,16 @@ function initProgressBar (duration) {
       const showValue = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0')
 
       circle.setText(showValue)
+
+      // Si le compte à rebours est terminé
+      if (secondsRemaining === 0) {
+
+        // On empêche l'utilisateur de cliquer sur les cartes
+        $('.card').unbind()
+
+        // On avertit l'utilisateur qu'il a perdu
+        alert('Looser !')
+      }
     }
   }
 

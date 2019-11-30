@@ -15,14 +15,14 @@ class Card {
 	constructor(cardName, colSpan) {
 
 		// Si la carte n'a pas de nom
-		if (cardName === 'undefined' || cardName === null) {
+		if (typeof cardName === 'undefined' || cardName === null) {
 			cardName = ''
 		}
 
 		this.#cardName = cardName;
 
 		// Si le nombre d'espace d'une colonne est inconnu
-		if (cardName === 'undefined' || cardName === null) {
+		if (typeof cardName === 'undefined' || cardName === null) {
 			colSpan = 1
 		}
 

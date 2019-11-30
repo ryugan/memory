@@ -51,7 +51,7 @@ class Board {
 		result += '<div class=\'row\'>'
 
 		// On détermine la valeur du modulo
-		const moduloValue = cardsNumber / 4;
+		const diviseur = cardsNumber / 4
 
 		// Il faut placer toutes les cartes
 		for (let cpt = 0; cpt < cardsNumber; cpt++) {
@@ -59,10 +59,10 @@ class Board {
 			let cardName = cards[cpt];
 
 			// On créée la carte en lui donnant son nom et la fonction à appeler au click
-			let card = new Card(cardName)
+			let card = new Card(cardName, diviseur)
 
 			// S'il reste 0 à une division par le modulo, on ferme la ligne précédente et on en ouvre une autre (sauf si c'est déjà la première ligne)
-			if (cpt != 0 && cpt % moduloValue === 0)  {
+			if (cpt != 0 && cpt % diviseur === 0)  {
 				result += `
 					</div>
 					<div class=\'row\'>

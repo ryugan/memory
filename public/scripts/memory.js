@@ -3,6 +3,19 @@ import Board from './board.js'
 
 $(document).ready(function () {
 
+  // Initialisation le plateau de jeux
+  initBoard(36)
+
+  // Initialisation de la sélection du nombre de cartes
+  initSelectCardsNumber()
+})
+
+/**
+ * Initialisation le plateau de jeux
+ */
+function initBoard (cardsNumber) {
+
+  // TODO mettre dans une BDD
   const fruits = [
     'red-apple',
     'banana',
@@ -22,7 +35,7 @@ $(document).ready(function () {
     'raspberry',
     'mango',
     'yellow-cherry'
-  ]
+  ].slice(0, cardsNumber / 2) // On réduit la taille de la liste
 
   const boardElement = $('.board')
 
@@ -37,8 +50,20 @@ $(document).ready(function () {
   // On récupère le rendu du composant Board
   const render = boardComposant.render()
 
+  // On nettoie le tableau
+  boardElement.empty()
+
   // On ajoute le rendu à l'élément HTML du board
   boardElement.append(render)
+
+  // Initialisation du clic sur les cartes
+  initCardsClick()
+}
+
+/**
+ * Initialise la gestion du clic sur une carte
+ */
+function initCardsClick () {
 
   // On ajoute la gestion du clic à la carte
   $('.card').click(function() {
@@ -82,5 +107,25 @@ $(document).ready(function () {
     }
     // Sinon il n'y avait pas de cartes retournées précédemment
   })
+}
 
-})
+/**
+ * Initialise la gestion du clic sur la sélection du nombre de carte
+ */
+function initSelectCardsNumber () {
+
+  // On recherche une seule fois l'élément
+  const select = $("#select-cards-number")
+
+  // On applique le change
+  select.change(function() {
+
+    // On récupère la valeur sélectionnée
+    const selectedValue =  select.val()
+
+    // On initialise le tableau avec cette valeur
+    initBoard(selectedValue)
+  })
+
+
+}

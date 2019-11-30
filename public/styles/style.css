@@ -14,6 +14,10 @@ h1 {
   margin-bottom: 10vmin;
 }
 
+label {
+  color: #fffdd8;
+}
+
 .board {
   border: 3px solid #0ac3a7;
   background-color: #49515f;
@@ -25,7 +29,6 @@ h1 {
   border-radius: 1.5em;
   margin: 0px !important;
   height: 120px;
-  min-width: 11.1111111111%;
 }
 
 .card-hide {

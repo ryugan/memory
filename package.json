@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-	"scss": "sass ./sass/style.scss ./public/styles/style.css",
+    "scss": "sass ./sass/style.scss ./public/styles/style.css",
     "start": "npm run scss && node ./bin/www"
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
+    "bootstrap-select": "^1.13.12",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.0.1",

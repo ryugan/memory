@@ -1,11 +1,14 @@
 var createError = require('http-errors')
 var express = require('express')
 var path = require('path')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
+
+var cookieParser = require('cookie-parser') // todo à conserver ?
+var logger = require('morgan') // todo à conserver ?
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
+
+var Database = require('./modules/Database')
 
 var app = express()
 
@@ -38,6 +41,16 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500)
   res.render('error')
+})
+
+const database = new Database('memory', 'dbuser:123456@localhost:33060') // todo Mot de passe en dure... acceptable au vu du mot de passe utilisé
+
+// Malheureusement, mysqlx ne semble pas capable de gérer plusieurs commandes en une fois
+// On créée d'abord la base si elle n'existe pas
+database.createSchemaIfNotExist().then((result) => {
+
+  // Puis même chose table après table...
+  database.createTablesIfNotExist()
 })
 
 module.exports = app

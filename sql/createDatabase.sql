@@ -1,0 +1,5 @@
+/*
+	DROP DATABASE IF EXISTS memory;
+*/
+
+CREATE DATABASE IF NOT EXISTS memory;

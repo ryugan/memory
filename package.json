@@ -7,6 +7,7 @@
     "start": "npm run scss && node ./bin/www"
   },
   "dependencies": {
+    "@mysql/xdevapi": "8.0.18",
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "bootstrap4-dialog": "^4.1.0",
@@ -19,6 +20,7 @@
     "jquery": "^3.4.1",
     "morgan": "~1.9.1",
     "nodejs": "0.0.0",
+    "popper.js": "^1.16.0",
     "progressbar.js": "^1.1.0",
     "sass": "^1.23.7"
   },

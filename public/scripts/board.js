@@ -3,9 +3,6 @@ import Card from './card.js'
 /* Classe représentant un tableau de jeux */
 class Board {
 
-		/* Liste des accesseurs */
-		cards = []
-
   /**
 	* Représente un tableau de jeux.
 	* @constructor

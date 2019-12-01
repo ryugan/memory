@@ -2,10 +2,6 @@
 /* Classe représentant une carte */
 class Card {
 
-	/* Liste des accesseurs */
-	cardName = ''
-	colSpan = 1
-
 	/**
  * Représente une carte.
  * @constructor

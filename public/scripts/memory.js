@@ -233,7 +233,7 @@ function stepProgressBar (state, circle, duration) {
 function insertVictory (secondsDuration) {
 
   // On note la date de Victoire
-  const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const date = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
   // On récupère le nombre de cartes sélectionnée
   const selectedValue =  $('#select-cards-number').val()

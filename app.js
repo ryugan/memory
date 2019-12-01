@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser') // todo à conserver ?
 var logger = require('morgan') // todo à conserver ?
 
 var indexRouter = require('./routes/index')
-var dataBaseRouter = require('./routes/dataBase')
+var dataBaseRouter = require('./routes/database')
 
 var Database = require('./modules/database')
 

@@ -1,16 +1,12 @@
 var mysqlx = require('@mysql/xdevapi')
 const { promisify } = require('util')
-var fs = require("fs");
+var fs = require("fs")
 
 const sqlFileCreateDatabase = './sql/createDatabase.sql'
 const sqlFileCreateTableScores = './sql/createTableScores.sql'
 
 /* Classe représentant une base de données */
 class Database {
-
-  /* Liste des accesseurs */
-  name = ''
-  connectionString = ''
 
   /**
 	* Représente une base de données.

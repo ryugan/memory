@@ -65,7 +65,7 @@ function initBoard (cardsNumber) {
     initCardsClick()
 
     // Initialisation de la progressbar (en millisecond)
-    initProgressBar(120000) // 2min = 5 * 60 * 1000
+    initCircleProgress(90000) // 1min30 = 1.5 * 60 * 1000
   })
 }
 
@@ -139,14 +139,14 @@ function reloadBoard () {
 }
 
 /**
- * Initialise la progress bar
+ * Initialise le circle progress
  */
-function initProgressBar (duration) {
+function initCircleProgress (duration) {
 
-  // On nettoie la progressbar
+  // On nettoie le circle progress
   $('#progress').empty()
 
-  // On définie les paramètres
+  // On met à jour les paramètres à exécuter
   const circleParameters = {
     color: '#28a745',
     duration: duration, // en milliseconds
@@ -154,24 +154,28 @@ function initProgressBar (duration) {
     trailWidth: 2, // largeur du trait du cercle en fond
     strokeWidth: 4, // largeur du trait de l'avancement
     from: { color: '#28a745', width: 2 },
-    to: { color: '#dc3545', width: 4 },
+    to: { color: duration === 0 ? '#28a745' : '#dc3545', width: 4 }, // Cas particulier du démarrage où la durée est à zéro, on laisse la couleur du début
     step: function (state, circle) {
-      stepProgressBar(state, circle, duration)
+      stepCircleProgress(state, circle, duration)
     }
   }
 
-  // On recrée une progressbar
+  // On recrée un circle progress à partir d'un ProgressBar
   const circle = new ProgressBar.Circle('#progress', circleParameters)
 
   // On anime le cercle une fois
-  circle.animate(1)
-
+  try {
+    circle.animate(1)
+  }
+  catch (e) {
+    // On ne fait rien, c'est juste pour occulter le message "Uncaught (in promise)" du circle progress qui gère mal le stop/rafraichissement
+  }
 }
 
 /**
- * Gére le comportement d'avancement de la progressbar
+ * Gére le comportement d'avancement du circle progress
  */
-function stepProgressBar (state, circle, duration) {
+function stepCircleProgress (state, circle, duration) {
   // Application des règles du From To
   circle.path.setAttribute('stroke', state.color)
   circle.path.setAttribute('stroke-width', state.width)
@@ -204,8 +208,11 @@ function stepProgressBar (state, circle, duration) {
     // On empêche l'utilisateur de cliquer sur les cartes
     $('.card').unbind()
 
-    // On avertit l'utilisateur qu'il a perdu, soit il recommence, soit on ne fait rien
-    warningDialog('Temps écoulé !', 'Tu as perdu....', 'La prochaine sera la meilleure !', 'Une prochaine fois...', reloadBoard, null)
+    // Si l'on n'est pas dans le cas particulier du démarrage où la durée est à 0
+    if (duration > 0) {
+      // On avertit l'utilisateur qu'il a perdu, soit il recommence, soit on ne fait rien
+      warningDialog('Temps écoulé !', 'Tu as perdu....', 'La prochaine sera la meilleure !', 'Une prochaine fois...', reloadBoard, null)
+    }
   }
   else {
 
@@ -275,38 +282,51 @@ async function showVictory (callback) {
     cardsNumber: selectedValue
   }
 
+  // En cas de réaffichage, il faut désactiver le compteur pour éviter de stresser le joueur qui voit le temps défiler
+  initCircleProgress(0)
+
   // On demande au serveur les meilleurs victoires pour le nombre de cartes
   $.get('/database/getScores', data, function(response) {
 
-    if (response.data === null || response.data.rows === null  || !response.data.rows.length || response.error === null) {
+    if (response.data === null || response.data.rows === null || response.error === null) {
       // On débloque le joueur pour qu'il puisse au moins joueur
       callback()
 
       return
     }
 
+    // On prépare des messages par défaut, notamment s'il n'y a pas eu de vainqueurs
+    let title = 'A l\'aventure compagnon !'
+    let btnMessage = 'Je vais exploser le compteur !'
+    let message = 'Nous sommes encore à la recherche d\'un champion d\'une partie à ' + selectedValue + ' cartes...\n Tu crois vraiment en être capable ?'
+
     // On regarde s'il y a déjà des victoires
     const rows = response.data.rows
     const rowsLength = rows.length
-    let message = ''
 
-    console.log(rows)
+    // S'il y a déjà eu des vainqueurs
+    if (rows.length) {
+      // On écrase les textes par défaut
+      title = 'Nos champions !'
+      btnMessage = 'Je vais faire mieux !'
+      message = ''
 
-    for (let cpt = 0; cpt < rowsLength; cpt++) {
-      const row = rows[cpt]
+      for (let cpt = 0; cpt < rowsLength; cpt++) {
+        const row = rows[cpt]
 
-      const position = cpt + 1
-      const minutes = parseInt(row.SecondDuration / 60).toString().padStart(2, '0')
-      const seconds = parseInt(row.SecondDuration % 60).toString().padStart(2, '0')
-      const date = new Date(row.DateScore).toLocaleString('fr-FR')
+        const position = cpt + 1
+        const minutes = parseInt(row.SecondDuration / 60).toString().padStart(2, '0')
+        const seconds = parseInt(row.SecondDuration % 60).toString().padStart(2, '0')
+        const date = new Date(row.DateScore).toLocaleString('fr-FR')
 
-      const subMessage = String.format('En position {0}, le joueur "{1}" en {2} min et {3} sec le {4}\n', position, row.PlayerId, minutes, seconds, date)
+        const subMessage = String.format('En position {0}, le joueur "{1}" en {2} min et {3} sec le {4}.\n', position, row.PlayerId, minutes, seconds, date)
 
-      message += subMessage
+        message += subMessage
+      }
     }
 
     // On prévient le joueur des meilleurs temps
-    defaultDialog('Nos champions !', message, 'Je vais faire mieux !', function() {
+    primaryDialog(title, message, btnMessage, null, function() {
 
       // On appelle le callback
       if (typeof callback !== 'undefined' && callback != null) {

@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser') // todo à conserver ?
 var logger = require('morgan') // todo à conserver ?
 
 var indexRouter = require('./routes/index')
-var usersRouter = require('./routes/users')
+var dataBaseRouter = require('./routes/dataBase')
 
-var Database = require('./modules/Database')
+var Database = require('./modules/database')
 
 var app = express()
 
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, '/public')))
 app.engine('html', require('ejs').renderFile)
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/database', dataBaseRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

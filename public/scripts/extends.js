@@ -48,6 +48,21 @@ String.prototype.right = (position) => {
     return result
 }
 
+/**
+ * Permet de remplacer une chaîne formatée par ses paramètres
+ * @param {int} position - La position dans la chaîne
+ * @return {string} La sous chaîne à droite
+ */
+String.prototype.format = function() {
+
+  // Les arguments en entrée
+  const args = arguments
+
+  return this.replace(/{(\d+)}/g, function(match, number) {
+    return typeof args[number] != 'undefined' ? args[number] : match
+  })
+}
+
 /*************/
 /*  Array  */
 /************/

@@ -149,64 +149,8 @@ function initProgressBar (duration) {
     strokeWidth: 4, // largeur du trait de l'avancement
     from: { color: '#28a745', width: 2 },
     to: { color: '#dc3545', width: 4 },
-    step: function(state, circle) {
-
-      // Application des règles du From To
-      circle.path.setAttribute('stroke', state.color)
-      circle.path.setAttribute('stroke-width', state.width)
-
-      // Récupération de la valeur du cercle (entre 0 et 1)
-      const circleValue = circle.value()
-
-      // Après avoir appliqué le stop, circle.value() return NaN et il faut appliquer un second stop pour un arrêt définitif
-      if (isNaN(circleValue)) {
-        circle.stop()
-        return
-      }
-
-      // Calcul du temps représentant
-      const secondsTotalRemaining = (duration - duration * circleValue) / 1000
-      const minutesRemaining = parseInt(secondsTotalRemaining / 60)
-      const secondsRemaining = parseInt(secondsTotalRemaining % 60)
-
-      // On affiche une chaîne contenant le temps restant
-      const showValue = minutesRemaining.toString().padStart(2, '0') + ':' + secondsRemaining.toString().padStart(2, '0')
-
-      circle.setText(showValue)
-
-      // Si le compte à rebours est terminé
-      if (secondsTotalRemaining === 0) {
-
-        // On arrête le timer
-        circle.stop()
-
-        // On empêche l'utilisateur de cliquer sur les cartes
-        $('.card').unbind()
-
-        // On avertit l'utilisateur qu'il a perdu, soit il recommence, soit on ne fait rien
-        warningDialog('Temps écoulé !', 'Tu as perdu....', 'La prochaine sera la meilleure !', 'Une prochaine fois...', reloadBoard, null)
-      }
-      else {
-
-        // On recherche s'il reste des cartes non trouvées
-        const eltHidden = $('.card-hide')
-        const eltHiddenLength = eltHidden.length
-
-        // S'il n'en reste plus, le joueur a gagné
-        if (eltHiddenLength === 0) {
-
-          // On arrête le timer
-          circle.stop()
-
-          // Calcul du temps de victoire
-          const secondsTotalPassed = duration * circleValue / 1000
-          const minutesPassed = parseInt(secondsTotalPassed / 60)
-          const secondsPassed = parseInt(secondsTotalPassed % 60)
-
-          // On avertit l'utilisateur qu'il a gagné, soit il recommence, soit on ne fait rien
-          successDialog('Victoire !', 'Tu as gagné en ' + minutesPassed + ' min et ' + secondsPassed + ' sec', 'Je peux faire encore mieux !', 'Non merci', reloadBoard, null)
-        }
-      }
+    step: function (state, circle) {
+      stepProgressBar(state, circle, duration)
     }
   }
 
@@ -216,4 +160,99 @@ function initProgressBar (duration) {
   // On anime le cercle une fois
   circle.animate(1)
 
+}
+
+/**
+ * Gére le comportement d'avancement de la progressbar
+ */
+function stepProgressBar (state, circle, duration) {
+  // Application des règles du From To
+  circle.path.setAttribute('stroke', state.color)
+  circle.path.setAttribute('stroke-width', state.width)
+
+  // Récupération de la valeur du cercle (entre 0 et 1)
+  const circleValue = circle.value()
+
+  // Après avoir appliqué le stop, circle.value() return NaN et il faut appliquer un second stop pour un arrêt définitif
+  if (isNaN(circleValue)) {
+    circle.stop()
+    return
+  }
+
+  // Calcul du temps représentant
+  const secondsTotalRemaining = (duration - duration * circleValue) / 1000
+  const minutesRemaining = parseInt(secondsTotalRemaining / 60)
+  const secondsRemaining = parseInt(secondsTotalRemaining % 60)
+
+  // On affiche une chaîne contenant le temps restant
+  const showValue = minutesRemaining.toString().padStart(2, '0') + ':' + secondsRemaining.toString().padStart(2, '0')
+
+  circle.setText(showValue)
+
+  // Si le compte à rebours est terminé
+  if (secondsTotalRemaining === 0) {
+
+    // On arrête le timer
+    circle.stop()
+
+    // On empêche l'utilisateur de cliquer sur les cartes
+    $('.card').unbind()
+
+    // On avertit l'utilisateur qu'il a perdu, soit il recommence, soit on ne fait rien
+    warningDialog('Temps écoulé !', 'Tu as perdu....', 'La prochaine sera la meilleure !', 'Une prochaine fois...', reloadBoard, null)
+  }
+  else {
+
+    // On recherche s'il reste des cartes non trouvées
+    const eltHidden = $('.card-hide')
+    const eltHiddenLength = eltHidden.length
+
+    // S'il n'en reste plus, le joueur a gagné
+    if (eltHiddenLength === 0) {
+
+      // On arrête le timer
+      circle.stop()
+
+      // Calcul du temps de victoire
+      const secondsTotalPassed = duration * circleValue / 1000
+      const minutesPassed = parseInt(secondsTotalPassed / 60)
+      const secondsPassed = parseInt(secondsTotalPassed % 60)
+
+      // On avertit l'utilisateur qu'il a gagné, soit il recommence, soit on ne fait rien
+      successDialog('Victoire !', 'Tu as gagné en ' + minutesPassed + ' min et ' + secondsPassed + ' sec', 'Je peux faire encore mieux !', 'Non merci', reloadBoard, null)
+
+      // On transmet la victoire au serveur
+      insertVictory(secondsTotalPassed)
+    }
+  }
+}
+
+/**
+ *
+ */
+function insertVictory (secondsDuration) {
+
+  // On note la date de Victoire
+  const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+  // On récupère le nombre de cartes sélectionnée
+  const selectedValue =  $('#select-cards-number').val()
+
+  // On format les données à transmettre
+  const data = {
+    date: date,
+    secondsDuration: secondsDuration,
+    cardsNumber: selectedValue
+  }
+
+  // On envoie la demande d'insertion
+  $.post('/database/insertScore', data, function() {
+    alert('success')
+  })
+  .done(function() {
+    alert('second success')
+  })
+  .fail(function() {
+    alert('error')
+  })
 }

@@ -77,7 +77,7 @@ class Database {
       const result = await this.executeQuery(query)
 
       // La table existe si le tableau n'est pas vide
-      return result.toArray().length === 1 ? 1 : 0
+      return result.length === 1 ? 1 : 0
     }
     catch(e) {
       console.error(e)
@@ -129,11 +129,11 @@ class Database {
       // Si la table n'existe pas on la créée
       if (!exist) {
 
-          console.log ('Création de la table : ' + tableName)
+        console.log ('Création de la table : ' + tableName)
 
-          await this.executeFile(sqlFileCreateTableScores)
+        await this.executeFile(sqlFileCreateTableScores)
 
-          return 1
+        return 1
       }
 
       // La base de données existe
@@ -149,9 +149,8 @@ class Database {
   /**
    * Retourne un Promise avec le résultat du fichier SQL en entrée (Attention le fichier ne doit contenir qu'une commande)
    * @return {Promise} Promise avec le résultat de la requête si celle-ci attendait un retour
-   * @return {Function} Callback à executer une fois la requête exécutée
    */
-  async executeFile(filePath, callback) {
+  async executeFile(filePath) {
 
     try {
 
@@ -169,18 +168,17 @@ class Database {
   /**
    * Retourne un Promise avec le résultat de la requête si celle-ci attendait un retour (Attention la requête ne doit contenir qu'une commande)
    * @return {Promise} Promise avec le résultat de la requête si celle-ci attendait un retour
-   * @return {Function} Callback à executer une fois la requête exécutée
    */
-  async executeQuery(query, callback) {
+  async executeQuery(query) {
 
     try {
       // Récupération de la session
       const session = await this.getSession()
+			const execute = await session.sql(query).execute()
 
-      if (typeof callback !== 'undefined' || callback != null) {
-        return await session.sql(query).execute(callback)
-      }
-      return await session.sql(query).execute()
+			// Retour de l'exécution de la requête
+			const resultArray = execute.toArray()
+			return resultArray.length ? resultArray[0] : []
     }
     catch(e) {
       console.error(e)

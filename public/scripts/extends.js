@@ -50,15 +50,13 @@ String.prototype.right = (position) => {
 
 /**
  * Permet de remplacer une chaîne formatée par ses paramètres
- * @param {int} position - La position dans la chaîne
+ * @param {string} format - Format attendu
+ * @param {arguments} args - Liste des arguments à insérer dans le format
  * @return {string} La sous chaîne à droite
  */
-String.prototype.format = function() {
+String.format = (format, ...args) => {
 
-  // Les arguments en entrée
-  const args = arguments
-
-  return this.replace(/{(\d+)}/g, function(match, number) {
+  return format.replace(/{(\d+)}/g, function(match, number) {
     return typeof args[number] != 'undefined' ? args[number] : match
   })
 }

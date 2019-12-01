@@ -43,6 +43,7 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
+// todo Trouver comment avoir un Database pour les contrôler tous
 const database = new Database('memory', 'dbuser:123456@localhost:33060') // todo Mot de passe en dure... acceptable au vu du mot de passe utilisé
 
 // Malheureusement, mysqlx ne semble pas capable de gérer plusieurs commandes en une fois

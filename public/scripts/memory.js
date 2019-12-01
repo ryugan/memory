@@ -56,11 +56,17 @@ function initBoard (cardsNumber) {
   // On ajoute le rendu à l'élément HTML du board
   boardElement.append(render)
 
-  // Initialisation du clic sur les cartes
-  initCardsClick()
+  // On affiche les victoires
+  showVictory(function() {
 
-  // Initialisation de la progressbar (en millisecond)
-  initProgressBar(120000) // 2min = 5 * 60 * 1000
+    // Note : Comme on est sympathique, on ne déclenche pas le chrono tant que l'utilisateur n'a pas confirmé avoir vu les scores
+
+    // Initialisation du clic sur les cartes
+    initCardsClick()
+
+    // Initialisation de la progressbar (en millisecond)
+    initProgressBar(120000) // 2min = 5 * 60 * 1000
+  })
 }
 
 /**
@@ -181,11 +187,11 @@ function stepProgressBar (state, circle, duration) {
 
   // Calcul du temps représentant
   const secondsTotalRemaining = (duration - duration * circleValue) / 1000
-  const minutesRemaining = parseInt(secondsTotalRemaining / 60)
-  const secondsRemaining = parseInt(secondsTotalRemaining % 60)
+  const minutesRemaining = parseInt(secondsTotalRemaining / 60).toString().padStart(2, '0')
+  const secondsRemaining = parseInt(secondsTotalRemaining % 60).toString().padStart(2, '0')
 
   // On affiche une chaîne contenant le temps restant
-  const showValue = minutesRemaining.toString().padStart(2, '0') + ':' + secondsRemaining.toString().padStart(2, '0')
+  const showValue = String.format('{0}:{1}', minutesRemaining, secondsRemaining)
 
   circle.setText(showValue)
 
@@ -219,7 +225,8 @@ function stepProgressBar (state, circle, duration) {
       const secondsPassed = parseInt(secondsTotalPassed % 60)
 
       // On avertit l'utilisateur qu'il a gagné, soit il recommence, soit on ne fait rien
-      successDialog('Victoire !', 'Tu as gagné en ' + minutesPassed + ' min et ' + secondsPassed + ' sec', 'Je peux faire encore mieux !', 'Non merci', reloadBoard, null)
+      const description = String.format('Tu as gagné en {0} min et {1} sec', minutesPassed, secondsPassed)
+      successDialog('Victoire !', description, 'Je peux faire encore mieux !', 'Non merci', reloadBoard, null)
 
       // On transmet la victoire au serveur
       insertVictory(secondsTotalPassed)
@@ -228,9 +235,10 @@ function stepProgressBar (state, circle, duration) {
 }
 
 /**
- *
+ * Informe le serveur qu'il faut insérer une nouvelle victoire
+ * @param {int} secondsDuration - Le nombre de secondes mis pour gagner
  */
-function insertVictory (secondsDuration) {
+async function insertVictory (secondsDuration) {
 
   // On note la date de Victoire
   const date = new Date().toISOString().slice(0, 19).replace('T', ' ')
@@ -246,13 +254,68 @@ function insertVictory (secondsDuration) {
   }
 
   // On envoie la demande d'insertion
-  $.post('/database/insertScore', data, function() {
-    alert('success')
-  })
-  .done(function() {
-    alert('second success')
+  $.post('/database/insertScore', data, function(response) {
+    // On ne fait rien, ce n'est pas important si l'utilisateur ne sait pas que la BDD ne répond pas
   })
   .fail(function() {
-    alert('error')
+    // On ne fait rien, ce n'est pas important si l'utilisateur ne sait pas que la BDD ne répond pas
+  })
+}
+
+/**
+ * Demande au serveur la liste des meilleurs victoires par rapport au nombre de cartes
+ * @param {Function} callback - Un callback à exécuter après l'appel en base de données
+ */
+async function showVictory (callback) {
+
+  // On récupère le nombre de cartes sélectionnée
+  const selectedValue =  $('#select-cards-number').val()
+
+  const data = {
+    cardsNumber: selectedValue
+  }
+
+  // On demande au serveur les meilleurs victoires pour le nombre de cartes
+  $.get('/database/getScores', data, function(response) {
+
+    if (response.data === null || response.data.rows === null  || !response.data.rows.length || response.error === null) {
+      // On débloque le joueur pour qu'il puisse au moins joueur
+      callback()
+
+      return
+    }
+
+    // On regarde s'il y a déjà des victoires
+    const rows = response.data.rows
+    const rowsLength = rows.length
+    let message = ''
+
+    console.log(rows)
+
+    for (let cpt = 0; cpt < rowsLength; cpt++) {
+      const row = rows[cpt]
+
+      const position = cpt + 1
+      const minutes = parseInt(row.SecondDuration / 60).toString().padStart(2, '0')
+      const seconds = parseInt(row.SecondDuration % 60).toString().padStart(2, '0')
+      const date = new Date(row.DateScore).toLocaleString('fr-FR')
+
+      const subMessage = String.format('En position {0}, le joueur "{1}" en {2} min et {3} sec le {4}\n', position, row.PlayerId, minutes, seconds, date)
+
+      message += subMessage
+    }
+
+    // On prévient le joueur des meilleurs temps
+    defaultDialog('Nos champions !', message, 'Je vais faire mieux !', function() {
+
+      // On appelle le callback
+      if (typeof callback !== 'undefined' && callback != null) {
+        callback()
+      }
+    }, null)
+  })
+  .fail(function() {
+    // On débloque le joueur pour qu'il puisse au moins joueur
+    callback()
   })
 }

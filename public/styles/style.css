@@ -182,4 +182,8 @@ label {
   margin-left: 10px;
 }
 
+.bootstrap-dialog-close-button {
+  opacity: 0 !important;
+}
+
 /*# sourceMappingURL=style.css.map */

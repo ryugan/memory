@@ -12,12 +12,12 @@ class Database {
 	* Représente une base de données.
 	* @constructor
 	* @param {string} name - Le nom de la base de données
-  * @param {string} user - Le nom de l'utilisateur
-	* @param {string} password - Le mot de passe
 	* @param {string} host - Le nom ou l'IP du serveur
 	* @param {string} port - Le port d'accès au serveur
+  * @param {string} user - Le nom de l'utilisateur
+	* @param {string} password - Le mot de passe
 	*/
-	constructor(name, user, password, host, port) {
+	constructor(name, host, port, user, password) {
 
     // Si la base de données n'a pas de nom
 		if (typeof name === 'undefined' || name === null) {
@@ -27,19 +27,19 @@ class Database {
 		this.name = name
 
     // Si la base de données n'a pas tous les paramètres de connexion
-		if (typeof user === 'undefined' || user === null
-			|| typeof password === 'undefined' || password === null
-			|| typeof host === 'undefined' || host === null
+		if (typeof host === 'undefined' || host === null
 			|| typeof port === 'undefined' || port === null
+			|| typeof user === 'undefined' || user === null
+			|| typeof password === 'undefined' || password === null
 		) {
 			throw 'Un des paramètres de connexion à la base de données est incorrect'
 		}
 
 		this.connectionParameters = {
+			host: host,
+	    port: port,
 	    user: user,
-	    password: password,
-	    host: host,
-	    port: port
+	    password: password
 	  }
 	}
 
@@ -53,7 +53,6 @@ class Database {
     }
     catch(e) {
       console.error(e)
-      return -1
     }
   }
 
@@ -186,10 +185,13 @@ class Database {
     try {
       // Récupération de la session
       const session = await this.getSession()
-			const execute = await session.sql(query).execute()
 
-			// Retour de l'exécution de la requête
+
+			// Récupération du retour de la requête
+			const execute = await session.sql(query).execute()
 			const resultArray = execute.toArray()
+
+			// Retour sous la forme d'un tableau
 			return resultArray.length ? resultArray[0] : []
     }
     catch(e) {

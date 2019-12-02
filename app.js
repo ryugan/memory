@@ -9,11 +9,11 @@ const config = require('./config.json')
 const defaultConfig = config.development
 const environment = process.env.NODE_ENV || 'development'
 const environmentConfig = config[environment]
-const finalConfig = _.merge(defaultConfig, environmentConfig)
+const finalConfig = _.merge(defaultConfig, environmentConfig) // Merge la configuration globale par défaut avec la configuration chargée
 global.gConfig = finalConfig
 
 // Initialisation de la base de données avant d'appeler les routes pour transmission
-const database = new Database(global.gConfig.database, global.gConfig.db_user, global.gConfig.password, global.gConfig.host, global.gConfig.port)
+const database = new Database(global.gConfig.database, global.gConfig.host, global.gConfig.port, global.gConfig.db_user, global.gConfig.password)
 global.database = database
 
 // Malheureusement, mysqlx ne semble pas capable de gérer plusieurs commandes en une fois (todo solution à tester expliqué dans (modules\database.js))
@@ -24,7 +24,7 @@ global.database.createSchemaIfNotExist().then((result) => {
   database.createTablesIfNotExist()
 })
 
-// Initialisation des roots
+// Initialisation des routes
 var indexRouter = require('./routes/index')
 var dataBaseRouter = require('./routes/database')
 

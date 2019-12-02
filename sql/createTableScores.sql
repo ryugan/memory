@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS memory.scores
 	PlayerId varchar(10) NOT NULL,
 	SecondDuration int NOT NULL,
 	CardsNumber int NOT NULL,
-	PRIMARY KEY (DateScore, PlayerId)
+	PRIMARY KEY (DateScore) /* La date suffit comme clé primaire car il y a suffisamment peu de joueurs pour ne pas avoir de validation à la seconde, auquel cas il faudrait aussi le PlayerId */
 );

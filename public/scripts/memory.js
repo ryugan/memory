@@ -307,7 +307,7 @@ async function showVictory (callback) {
     // S'il y a déjà eu des vainqueurs
     if (rows.length) {
       // On écrase les textes par défaut
-      title = 'Nos champions !'
+      title = String.format('Nos champions pour {0} cartes !', selectedValue)
       btnMessage = 'Je vais faire mieux !'
       message = ''
 

@@ -225,3 +225,7 @@ label {
 .btn-cancel {
 	margin-left: 10px;
 }
+
+.bootstrap-dialog-close-button {
+	opacity: 0 !important; // On cache le bouton pour ne pas avoir à le gérer
+}

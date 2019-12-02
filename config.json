@@ -1,0 +1,20 @@
+{
+    "development": {
+        "config_id": "dev",
+        "node_port": 3000,
+        "database": "memory",
+        "db_user": "dbuser",
+        "password": "123456",
+        "host": "localhost",
+        "port": 33060
+    },
+    "production": {
+        "config_id": "prod",
+        "node_port": 8080,
+        "database": "memory",
+        "db_user": "root",
+        "password": "azerty",
+        "host": "localhost",
+        "port": 33060
+    }
+}

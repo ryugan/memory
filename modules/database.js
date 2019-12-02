@@ -1,6 +1,6 @@
 var mysqlx = require('@mysql/xdevapi')
 const { promisify } = require('util')
-var fs = require("fs")
+var fs = require('fs')
 
 const sqlFileCreateDatabase = './sql/createDatabase.sql'
 const sqlFileCreateTableScores = './sql/createTableScores.sql'
@@ -12,23 +12,35 @@ class Database {
 	* Représente une base de données.
 	* @constructor
 	* @param {string} name - Le nom de la base de données
-  * @param {string} connectionString - La chaîne de connexion
+  * @param {string} user - Le nom de l'utilisateur
+	* @param {string} password - Le mot de passe
+	* @param {string} host - Le nom ou l'IP du serveur
+	* @param {string} port - Le port d'accès au serveur
 	*/
-	constructor(name, connectionString) {
+	constructor(name, user, password, host, port) {
 
     // Si la base de données n'a pas de nom
 		if (typeof name === 'undefined' || name === null) {
-			throw 'La base de données n\'a pas de nom !';
+			throw 'La base de données n\'a pas de nom !'
 		}
 
-		this.name = name;
+		this.name = name
 
-    // Si la base de données n'a pas de chaîne de connexion
-		if (typeof connectionString === 'undefined' || connectionString === null) {
-			throw 'La base de données n\'a pas de chaîne de connexion !';
+    // Si la base de données n'a pas tous les paramètres de connexion
+		if (typeof user === 'undefined' || user === null
+			|| typeof password === 'undefined' || password === null
+			|| typeof host === 'undefined' || host === null
+			|| typeof port === 'undefined' || port === null
+		) {
+			throw 'Un des paramètres de connexion à la base de données est incorrect'
 		}
 
-		this.connectionString = connectionString;
+		this.connectionParameters = {
+	    user: user,
+	    password: password,
+	    host: host,
+	    port: port
+	  }
 	}
 
   /**
@@ -37,7 +49,7 @@ class Database {
    */
   async getSession (){
     try {
-      return mysqlx.getSession(this.connectionString)
+      return mysqlx.getSession(this.connectionParameters)
     }
     catch(e) {
       console.error(e)

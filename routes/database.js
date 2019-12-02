@@ -1,10 +1,9 @@
 var express = require('express')
 var router = express.Router()
 var HttpStatus = require('http-status-codes')
-var Database = require('../modules/database')
 
-// todo Trouver comment avoir un Database pour les contrôler tous
-const database = new Database('memory', 'dbuser:123456@localhost:33060')
+// Récupération de l'accès à la base de données
+const database = global.database
 
 // Gestion de la demande des scores
 router.get('/getScores', async function (req, res, next) {

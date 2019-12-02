@@ -19,6 +19,7 @@
     "http-status-codes": "^1.4.0",
     "install": "^0.13.0",
     "jquery": "^3.4.1",
+    "lodash.merge": "^4.6.2",
     "morgan": "~1.9.1",
     "nodejs": "0.0.0",
     "popper.js": "^1.16.0",

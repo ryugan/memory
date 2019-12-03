@@ -6,7 +6,7 @@ const sqlFileCreateDatabase = './sql/createDatabase.sql'
 const sqlFileCreateTableScores = './sql/createTableScores.sql'
 
 /* Classe représentant une base de données */
-class Database {
+class MysqlXDatabase {
 
   /**
 	* Représente une base de données.
@@ -58,6 +58,7 @@ class Database {
 
   /**
    * Indique si une base de données existe (-1 : erreur, 0 : n'existe pas, 1 : existe)
+	 * @param {string} databaseName - Le nom de la base de données
    * @return {Promise} Promise indiquant si une base de données existe
    */
   async checkSchemaExist(databaseName) {
@@ -78,6 +79,7 @@ class Database {
 
   /**
    * Indique si une table existe (-1 : erreur, 0 : n'existe pas, 1 : existe)
+	 * @param {string} tableName - Le nom de la table
    * @return {Promise} Promise indiquant si une table existe
    */
   async checkTableExist(tableName) {
@@ -130,7 +132,7 @@ class Database {
    * Retourne un Promise indiquant si certaines tables ont dû être créées (-1 : erreur, 0 : existaient déjà, 1 : ont toutes été créées, 2 ont été créées partiellement)
    * @return {Promise} Promise indiquant si certaines tables ont dû être créées
    */
-  async createTablesIfNotExist(session) {
+  async createTablesIfNotExist() {
 
     try {
       // Recherche s'il existe la base de données voules
@@ -159,7 +161,8 @@ class Database {
 // todo possibilité de palier le problème en faisant un split sur le ';' et en bouclant sur les lignes
   /**
    * Retourne un Promise avec le résultat du fichier SQL en entrée (Attention le fichier ne doit contenir qu'une commande)
-   * @return {Promise} Promise avec le résultat de la requête si celle-ci attendait un retour
+	 * @param {string} filePath - Le chemin d'accès complet au fichier
+	 * @return {Promise} Promise avec le résultat de la requête si celle-ci attendait un retour
    */
   async executeFile(filePath) {
 
@@ -168,7 +171,7 @@ class Database {
       const readFileAsync = promisify(fs.readFile)
       const queryData = await readFileAsync(filePath, 'utf8')
 
-      return await this.executeQuery(queryData, callback)
+      return await this.executeQuery(queryData)
     }
     catch(e) {
       console.error(e)
@@ -178,7 +181,8 @@ class Database {
 // todo possibilité de palier le problème en faisant un split sur le ';' et en bouclant sur les lignes
   /**
    * Retourne un Promise avec le résultat de la requête si celle-ci attendait un retour (Attention la requête ne doit contenir qu'une commande)
-   * @return {Promise} Promise avec le résultat de la requête si celle-ci attendait un retour
+	 * @param {string} query - Le texte de la requête à exécyter
+	 * @return {Promise} Promise avec le résultat de la requête si celle-ci attendait un retour
    */
   async executeQuery(query) {
 
@@ -200,4 +204,4 @@ class Database {
   }
 }
 
-module.exports = Database
+module.exports = MysqlXDatabase

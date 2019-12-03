@@ -2,7 +2,7 @@ var createError = require('http-errors')
 var express = require('express')
 var path = require('path')
 const _ = require('lodash')
-var Database = require('./modules/database')
+var MysqlDatabase = require('./modules/mysqlDatabase')
 
 // Initialisation de la configuration avant d'appeler les routes pour transmission
 const config = require('./config.json')
@@ -13,11 +13,12 @@ const finalConfig = _.merge(defaultConfig, environmentConfig) // Merge la config
 global.gConfig = finalConfig
 
 // Initialisation de la base de données avant d'appeler les routes pour transmission
-const database = new Database(global.gConfig.database, global.gConfig.host, global.gConfig.port, global.gConfig.db_user, global.gConfig.password)
+const database = new MysqlDatabase(global.gConfig.database, global.gConfig.host, global.gConfig.port, global.gConfig.db_user, global.gConfig.password, global.gConfig.db_connection_limit)
 global.database = database
 
 // Malheureusement, mysqlx ne semble pas capable de gérer plusieurs commandes en une fois (todo solution à tester expliqué dans (modules\database.js))
 // On créée d'abord la base si elle n'existe pas
+
 global.database.createSchemaIfNotExist().then((result) => {
 
   // Puis même chose table après table...

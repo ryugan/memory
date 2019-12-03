@@ -6,7 +6,8 @@
         "db_user": "dbuser",
         "password": "123456",
         "host": "localhost",
-        "port": 33060
+        "port": 3306,
+        "db_connection_limit": 10
     },
     "production": {
         "config_id": "prod",
@@ -15,6 +16,7 @@
         "db_user": "root",
         "password": "azerty",
         "host": "localhost",
-        "port": 33060
+        "port": 33060,
+        "db_connection_limit": 1000
     }
 }

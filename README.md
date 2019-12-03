@@ -36,6 +36,11 @@ $ npm start
 - **Comment installer la base de données ?**
     - Pas de problème ! Elle s'installe automatiquement s'il y a besoin.
 
+- **Mon user de base de données n'a pas les droits sur la base memory.scores**
+    - Adapter la commande suivante avec votre propre user
+    `GRANT ALL PRIVILEGES ON memory.* TO 'dbuser'@'localhost';
+    FLUSH PRIVILEGES;`
+
 - **Comment effacer les scores ?**
     - Lance MySQL et exécute la commande suivante `DELETE FROM memory.scores;`.
     - Sinon j'accepte les chèques et les virements paypal

@@ -1,6 +1,6 @@
 {
   "name": "memory",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "scss": "sass ./sass/style.scss ./public/styles/style.css",
@@ -11,7 +11,6 @@
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "bootstrap4-dialog": "^4.1.0",
-    "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.0.1",
     "express": "~4.16.1",
@@ -19,16 +18,11 @@
     "http-status-codes": "^1.4.0",
     "install": "^0.13.0",
     "jquery": "^3.4.1",
-    "lodash.merge": "^4.6.2",
-    "morgan": "~1.9.1",
+    "lodash": "^4.6.2",
     "mysql": "^2.17.1",
     "nodejs": "0.0.0",
     "popper.js": "^1.16.0",
     "progressbar.js": "^1.1.0",
     "sass": "^1.23.7"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "connect-browser-sync": "^2.1.0"
   }
 }

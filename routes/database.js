@@ -19,26 +19,11 @@ router.get('/getScores', async function (req, res, next) {
     // On récupère les lignes en résultat
     const rows = await database.executeQuery(query)
 
-    // On met en forme le contenu des résultats
-    const result = []
-    const rowsLength = rows.length
-
-    for (let cpt = 0; cpt < rowsLength; cpt++) {
-
-      const row = rows[cpt]
-
-      result.push({
-        DateScore: row[0],
-        PlayerId: row[1],
-        SecondDuration: row[2]
-      })
-    }
-
     // On transmet les résultats au client
     return res.json({
       data: {
         code: 'ok',
-        rows: result
+        rows: rows
       }
     })
   }

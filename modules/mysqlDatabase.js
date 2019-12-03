@@ -47,8 +47,8 @@ class MysqlDatabase {
 	}
 
   /**
-   * Retourne Un Promise de le pool de connexion de la base de données
-   * @return {Promise} Le Promise de le pool de connection
+   * Retourne Un Promise du pool de connexion de la base de données
+   * @return {Promise} Le Promise du pool de connexion
    */
   async getPool (){
     try {
